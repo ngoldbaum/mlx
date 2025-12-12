@@ -30,10 +30,13 @@ jobs:
       fail-fast: false
       matrix:
         arch: ['x86_64', 'aarch64']
+        python-version: ["3.10", "3.14t"]
     runs-on: ${{ matrix.arch == 'x86_64' && 'ubuntu-22.04' || 'ubuntu-22.04-arm' }}
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-linux
+        with:
+          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/build-linux
       - uses: ./.github/actions/test-linux
 
@@ -66,6 +69,7 @@ jobs:
     strategy:
       matrix:
         macos-target: ["14.0", "15.0"]
+        python-version: ["3.10", "3.14t"]
     runs-on: [self-hosted, macos]
     env:
       MACOSX_DEPLOYMENT_TARGET: ${{ matrix.macos-target }}
@@ -73,6 +77,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-macos
+        with:
+          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/build-macos
 
   build_documentation:
