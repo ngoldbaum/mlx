@@ -69,7 +69,7 @@ jobs:
       matrix:
         macos-target: ["14.0", "15.0"]
         python-version: ["3.10", "3.14t"]
-    runs-on: [self-hosted, macos]
+    runs-on: [macos]
     env:
       MACOSX_DEPLOYMENT_TARGET: ${{ matrix.macos-target }}
     needs: check_lint
