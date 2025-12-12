@@ -65,7 +65,6 @@ jobs:
 
   mac_build_and_test:
     name: macOS (${{ matrix.macos-target }}, Python ${{ matrix.python-version }})
-    if: github.repository == 'ml-explore/mlx'
     strategy:
       matrix:
         macos-target: ["14.0", "15.0"]
