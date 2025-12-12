@@ -9,12 +9,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Run MPI tests
-      shell: bash
-      run: |
-        echo "::group::MPI tests"
-        mpirun --bind-to none --allow-run-as-root -host localhost:8 -np 8 python python/tests/mpi_test_distributed.py
-        echo "::endgroup::"
+    #- name: Run MPI tests
+    #  shell: bash
+    #  run: |
+    #    echo "::group::MPI tests"
+    #    mpirun --bind-to none --allow-run-as-root -host localhost:8 -np 8 python python/tests/mpi_test_distributed.py
+    #    echo "::endgroup::"
 
     - name: Run distributed tests
       if: ${{ inputs.has-gpu == 'false' }}

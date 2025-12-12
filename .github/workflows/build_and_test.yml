@@ -24,16 +24,19 @@ jobs:
       - uses: pre-commit/action@v3.0.1
 
   linux_build_and_test:
-    name: Linux (cpu, ${{ matrix.arch }})
+    name: Linux (cpu, ${{ matrix.arch }} Python ${{ matrix.python-version }})
     needs: check_lint
     strategy:
       fail-fast: false
       matrix:
         arch: ['x86_64', 'aarch64']
+        python-version: ["3.10", "3.14t"]
     runs-on: ${{ matrix.arch == 'x86_64' && 'ubuntu-22.04' || 'ubuntu-22.04-arm' }}
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-linux
+        with:
+          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/build-linux
       - uses: ./.github/actions/test-linux
 
@@ -61,18 +64,20 @@ jobs:
           has-gpu: true
 
   mac_build_and_test:
-    name: macOS (${{ matrix.macos-target }})
-    if: github.repository == 'ml-explore/mlx'
+    name: macOS (${{ matrix.macos-target }}, Python ${{ matrix.python-version }})
     strategy:
       matrix:
         macos-target: ["14.0", "15.0"]
-    runs-on: [self-hosted, macos]
+        python-version: ["3.10", "3.14t"]
+    runs-on: [macos-latest]
     env:
       MACOSX_DEPLOYMENT_TARGET: ${{ matrix.macos-target }}
     needs: check_lint
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-macos
+        with:
+          python-version: ${{ matrix.python-version }}
       - uses: ./.github/actions/build-macos
 
   build_documentation:
