@@ -24,7 +24,7 @@ jobs:
       - uses: pre-commit/action@v3.0.1
 
   linux_build_and_test:
-    name: Linux (cpu, ${{ matrix.arch }})
+    name: Linux (cpu, ${{ matrix.arch }} Python ${{ matrix.python-version }})
     needs: check_lint
     strategy:
       fail-fast: false
@@ -64,7 +64,7 @@ jobs:
           has-gpu: true
 
   mac_build_and_test:
-    name: macOS (${{ matrix.macos-target }})
+    name: macOS (${{ matrix.macos-target }}, Python ${{ matrix.python-version }})
     if: github.repository == 'ml-explore/mlx'
     strategy:
       matrix:
